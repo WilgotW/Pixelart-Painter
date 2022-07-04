@@ -5,13 +5,16 @@ canvas.width = 750;
 canvas.height = 750;
 
 let lines = [];
-let lineAmount = 35;
+let lineAmount = 45;
 let lineGap = canvas.width/lineAmount;
 
 let squares = [];
 
 let gridX = [];
 let gridY = [];
+
+let MouseOffset = 0.5;
+let yMouseOffset = 1;
 
 class line {
     constructor(x, y, endX, endY){
@@ -81,8 +84,19 @@ window.addEventListener('click', function(event) {
     if(mouse.y < 0 || mouse.y > canvas.height){
         mouse.y = undefined;
     }
-    squares.push(new fillSquare(mouse.x,mouse.y, lineGap))
+    
     console.log(mouse.x + " " + mouse.y);
+
+    const closestX = gridX.reduce((a, b) => {
+        return Math.abs(b-mouse.x/lineGap +MouseOffset ) < Math.abs(a - mouse.x/lineGap +MouseOffset ) ? b : a;
+    })
+    const closestY = gridY.reduce((a, b) => {
+        return Math.abs(b-mouse.y/lineGap +MouseOffset ) < Math.abs(a - mouse.y/lineGap +MouseOffset ) ? b : a;
+    })
+    
+    console.log("mouse x pos = " + mouse.x/lineGap + ". closest number was = " + closestX);
+
+    squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap))
 });
 
 
