@@ -1,11 +1,12 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
-canvas.width = 500;
-canvas.height = 500;
+canvas.width = 750;
+canvas.height = 750;
 
 let lines = [];
-let lineGap = 25;
+let lineAmount = 35;
+let lineGap = canvas.width/lineAmount;
 class line {
     constructor(x, y, endX, endY){
         this.x = x;
@@ -23,19 +24,58 @@ class line {
     }
 }
 
-function setup(){
-    for(i = 0; i < canvas.width/lineGap +10; i++){
-        lines.push(new line(i*lineGap, 0, i*lineGap, canvas.height));
-        for(z = i; z < canvas.height/lineGap +10; z++){
-            lines.push(new line(0, z*lineGap, canvas.width, z*lineGap));
-        }
+class grid{
+    constructor(){
+        this.x = 0;
     }
+    draw(){
+        
+        lines.push(new line(0, 0, 0, canvas.height));
+        lines.push(new line(canvas.width, 0, canvas.width, canvas.height));
+
+        lines.push(new line(0, canvas.height, canvas.width, canvas.height));
+        lines.push(new line(0, 0, canvas.width, 0));
+
+        for(let i = 0; i < canvas.width/lineGap; i++){
+            //vertical lines
+            lines.push(new line(i*lineGap, 0, i*lineGap, canvas.height));
+            for(let z = i; z < canvas.height/lineGap; z++){
+                //horizontal lines
+                lines.push(new line(0, z*lineGap, canvas.width, z*lineGap));
+            }
+        }
+        for(let i = 0; i < lines.length; i++){lines[i].draw();}
+    }
+}
+let grid1 = new grid();
+
+const mouse = {
+    x: undefined,
+    y: undefined
+};
+window.addEventListener('click', function(event) {
+    let rect = canvas.getBoundingClientRect();
+    mouse.x = event.x - Math.floor(rect.left);
+    mouse.y = event.y - Math.floor(rect.top);
+    
+    console.log(mouse.x + " " + mouse.y);
+});
+
+function setup(){
+    
 }
 setup();
 
 function update(){
-    for(i = 0; i < lines.length; i++){lines[i].draw();}
-
+    refrech();
+    grid1.draw();
+    
     requestAnimationFrame(update);
 }
 update();
+
+function refrech(){
+    for(let i = 0; i < lines.length; i++){lines.splice(i, 0)}
+    c.fillStyle = 'white';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+}
