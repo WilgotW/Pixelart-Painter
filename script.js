@@ -37,13 +37,10 @@ class grid{
     constructor(){
     }
     draw(){
-        
         lines.push(new line(0, 0, 0, canvas.height));
         lines.push(new line(canvas.width, 0, canvas.width, canvas.height));
-
         lines.push(new line(0, canvas.height, canvas.width, canvas.height));
         lines.push(new line(0, 0, canvas.width, 0));
-
         for(let i = 0; i < canvas.width/lineGap; i++){
             //vertical lines
             lines.push(new line(i*lineGap, 0, i*lineGap, canvas.height));
@@ -52,7 +49,6 @@ class grid{
             //horizontal lines
             lines.push(new line(0, z*lineGap, canvas.width, z*lineGap));
         }
-
         for(let i = 0; i < lines.length; i++){lines[i].draw();}
     }
 }
@@ -86,17 +82,18 @@ window.addEventListener('click', function(event) {
     }
     
     console.log(mouse.x + " " + mouse.y);
-
-    const closestX = gridX.reduce((a, b) => {
-        return Math.abs(b-mouse.x/lineGap +MouseOffset ) < Math.abs(a - mouse.x/lineGap +MouseOffset ) ? b : a;
-    })
-    const closestY = gridY.reduce((a, b) => {
-        return Math.abs(b-mouse.y/lineGap +MouseOffset ) < Math.abs(a - mouse.y/lineGap +MouseOffset ) ? b : a;
-    })
+    if(mouse.x != undefined && mouse.y != undefined){
+        const closestX = gridX.reduce((a, b) => {
+            return Math.abs(b-mouse.x/lineGap +MouseOffset ) < Math.abs(a - mouse.x/lineGap +MouseOffset ) ? b : a;
+        })
+        const closestY = gridY.reduce((a, b) => {
+            return Math.abs(b-mouse.y/lineGap +MouseOffset ) < Math.abs(a - mouse.y/lineGap +MouseOffset ) ? b : a;
+        })
+        console.log("mouse x pos = " + mouse.x/lineGap + ". closest number was = " + closestX);
+        squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap))
+    }
+    console.log("mouse outside grid");
     
-    console.log("mouse x pos = " + mouse.x/lineGap + ". closest number was = " + closestX);
-
-    squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap))
 });
 
 
