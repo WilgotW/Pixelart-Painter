@@ -5,7 +5,7 @@ canvas.width = 750;
 canvas.height = 750;
 
 let lines = [];
-let lineAmount = 45;
+let lineAmount = 50;
 let lineGap = canvas.width/lineAmount;
 
 let squares = [];
@@ -13,8 +13,10 @@ let squares = [];
 let gridX = [];
 let gridY = [];
 
+let xMousePos = 0;
+let yMoisePos = 0;
 let MouseOffset = 0.5;
-let yMouseOffset = 1;
+let mouseDown = false;
 
 class line {
     constructor(x, y, endX, endY){
@@ -61,7 +63,7 @@ class fillSquare{
         this.size = size;
     }
     draw(){
-        c.fillStyle = 'green';
+        c.fillStyle = 'blue';
         c.fillRect(this.x, this.y, this.size, this.size);
     }
 }
@@ -70,18 +72,31 @@ const mouse = {
     x: undefined,
     y: undefined
 };
-window.addEventListener('click', function(event) {
+// window.addEventListener('click', function(event) {
+//     placePixels(event);
+// });
+window.addEventListener('mousemove', function(event) {
+    xMousePos = event.x;
+    yMoisePos = event.y;
+});
+window.addEventListener('mousedown', function(event) {
+    mouseDown = true;
+});
+window.addEventListener('mouseup', function(event) {
+    mouseDown = false;
+});
+
+function placePixels(){
     let rect = canvas.getBoundingClientRect();
-    mouse.x = event.x - Math.floor(rect.left);
-    mouse.y = event.y - Math.floor(rect.top);
+    mouse.x = xMousePos - Math.floor(rect.left);
+    mouse.y = yMoisePos - Math.floor(rect.top);
     if(mouse.x < 0 || mouse.x > canvas.width){
         mouse.x = undefined;
     }
     if(mouse.y < 0 || mouse.y > canvas.height){
         mouse.y = undefined;
     }
-    
-    console.log(mouse.x + " " + mouse.y);
+
     if(mouse.x != undefined && mouse.y != undefined){
         const closestX = gridX.reduce((a, b) => {
             return Math.abs(b-mouse.x/lineGap +MouseOffset ) < Math.abs(a - mouse.x/lineGap +MouseOffset ) ? b : a;
@@ -91,16 +106,21 @@ window.addEventListener('click', function(event) {
         })
         console.log("mouse x pos = " + mouse.x/lineGap + ". closest number was = " + closestX);
         squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap))
+    }else{
+        console.log("mouse outside grid");
     }
-    console.log("mouse outside grid");
     
-});
+}
 
 
 
 function update(){
     for(i = 0; i < squares.length; i++){
         squares[i].draw();
+    }
+
+    if(mouseDown){
+        placePixels();
     }
     requestAnimationFrame(update);
 }
