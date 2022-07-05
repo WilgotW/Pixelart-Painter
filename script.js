@@ -5,7 +5,7 @@ canvas.width = 750;
 canvas.height = 750;
 
 let lines = [];
-let lineAmount = 50;
+let lineAmount = 10;
 let lineGap = canvas.width/lineAmount;
 
 let squares = [];
@@ -139,3 +139,25 @@ function changeColor(changeColor){
 
 const redColorBtn = document.getElementById('grid-item1');
 redColorBtn.addEventListener('click', () => {changeColor('red')});
+const orangeColorBtn = document.getElementById('grid-item2');
+orangeColorBtn.addEventListener('click', () => {changeColor('orange')});
+const yellowColorBtn = document.getElementById('grid-item3');
+yellowColorBtn.addEventListener('click', () => {changeColor('yellow')});
+const lightGreenColorBtn = document.getElementById('grid-item4');
+lightGreenColorBtn.addEventListener('click', () => {changeColor('lime')});
+const greenColorBtn = document.getElementById('grid-item5');
+greenColorBtn.addEventListener('click', () => {changeColor('green')});
+const cyanColorBtn = document.getElementById('grid-item6');
+cyanColorBtn.addEventListener('click', () => {changeColor('aqua')});
+const blueColorBtn = document.getElementById('grid-item7');
+blueColorBtn.addEventListener('click', () => {changeColor('blue')});
+const purpleColorBtn = document.getElementById('grid-item8');
+purpleColorBtn.addEventListener('click', () => {changeColor('purple')});
+const whiteColorBtn = document.getElementById('grid-item9');
+whiteColorBtn.addEventListener('click', () => {changeColor('white')});
+const lightGrayColorBtn = document.getElementById('grid-item10');
+lightGrayColorBtn.addEventListener('click', () => {changeColor('lightgray')});
+const grayColorBtn = document.getElementById('grid-item11');
+grayColorBtn.addEventListener('click', () => {changeColor('gray')});
+const blackColorBtn = document.getElementById('grid-item12');
+blackColorBtn.addEventListener('click', () => {changeColor('black')});
