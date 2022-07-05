@@ -55,6 +55,12 @@ h1{
     width: 50px;
 }
 
+.slidecontainer {
+    width: 100%; 
+}
+
+
+
 #grid-item1{
     background: red;
 }
