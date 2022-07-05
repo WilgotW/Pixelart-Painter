@@ -17,7 +17,6 @@ let xMousePos = 0;
 let yMoisePos = 0;
 let MouseOffset = 0.5;
 let mouseDown = false;
-
 class line {
     constructor(x, y, endX, endY){
         this.x = x;
@@ -72,9 +71,6 @@ const mouse = {
     x: undefined,
     y: undefined
 };
-// window.addEventListener('click', function(event) {
-//     placePixels(event);
-// });
 window.addEventListener('mousemove', function(event) {
     xMousePos = event.x;
     yMoisePos = event.y;
@@ -85,7 +81,6 @@ window.addEventListener('mousedown', function(event) {
 window.addEventListener('mouseup', function(event) {
     mouseDown = false;
 });
-
 function placePixels(){
     let rect = canvas.getBoundingClientRect();
     mouse.x = xMousePos - Math.floor(rect.left);
@@ -111,9 +106,6 @@ function placePixels(){
     }
     
 }
-
-
-
 function update(){
     for(i = 0; i < squares.length; i++){
         squares[i].draw();
@@ -125,15 +117,11 @@ function update(){
     requestAnimationFrame(update);
 }
 update();
-
-
-
 function setup(){
     grid1.draw();
     setupGridCordinates();
 }
 setup();
-
 function setupGridCordinates(){
     for(i = 0; i < lines.length/2; i++){
         gridX.push(i);
