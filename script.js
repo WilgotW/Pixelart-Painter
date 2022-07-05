@@ -5,7 +5,7 @@ canvas.width = 750;
 canvas.height = 750;
 
 let lines = [];
-let lineAmount = 25;
+let lineAmount = 10;
 let lineGap = canvas.width/lineAmount;
 
 let squares = [];
@@ -56,7 +56,7 @@ class grid{
         for(let i = 0; i < lines.length; i++){lines[i].draw();}
     }
 }
-let grid1 = new grid();
+let grid1;
 
 class fillSquare{
     constructor(x, y, size, color){
@@ -114,29 +114,37 @@ function update(){
     for(i = 0; i < squares.length; i++){
         squares[i].draw();
     }
-
     if(mouseDown){
         placePixels();
     }
     requestAnimationFrame(update);
 }
 update();
-function setup(){
-    grid1.draw();
-    setupGridCordinates();
-}
-setup();
+
 function setupGridCordinates(){
     for(i = 0; i < lines.length/2; i++){
         gridX.push(i);
         gridY.push(i);
     }
 }
+function setup(){
+    clearCanvas();
+    grid1.draw();
+    setupGridCordinates();
+}
+setup();
+function clearCanvas(){
+    grid1 = new grid();
+    c.fillStyle = "white";
+    c.fillRect(0, 0, canvas.width, canvas.height);
+
+}
 
 function changeColor(changeColor){
     color = changeColor;
 }
 
+//Color buttons
 const redColorBtn = document.getElementById('grid-item1');
 redColorBtn.addEventListener('click', () => {changeColor('red')});
 const orangeColorBtn = document.getElementById('grid-item2');
@@ -161,3 +169,16 @@ const grayColorBtn = document.getElementById('grid-item11');
 grayColorBtn.addEventListener('click', () => {changeColor('gray')});
 const blackColorBtn = document.getElementById('grid-item12');
 blackColorBtn.addEventListener('click', () => {changeColor('black')});
+//Slider
+const dimensionSlider = document.getElementById('slider');
+const dimensionText = document.getElementById('dimensionsText');
+
+function slider(){
+    lineAmount = dimensionSlider.value;
+    dimensionTextChange();
+}
+function dimensionTextChange(){
+    dimensionText.innerHTML = lineAmount + "x" + lineAmount;
+    setup();
+}
+setInterval(slider, 10);
