@@ -17,6 +17,9 @@ let xMousePos = 0;
 let yMoisePos = 0;
 let MouseOffset = 0.5;
 let mouseDown = false;
+
+let color = 'blue';
+
 class line {
     constructor(x, y, endX, endY){
         this.x = x;
@@ -56,13 +59,14 @@ class grid{
 let grid1 = new grid();
 
 class fillSquare{
-    constructor(x, y, size){
+    constructor(x, y, size, color){
         this.x = x;
         this.y = y;
         this.size = size;
+        this.color = color
     }
     draw(){
-        c.fillStyle = 'blue';
+        c.fillStyle = this.color;
         c.fillRect(this.x, this.y, this.size, this.size);
     }
 }
@@ -100,7 +104,7 @@ function placePixels(){
             return Math.abs(b-mouse.y/lineGap +MouseOffset ) < Math.abs(a - mouse.y/lineGap +MouseOffset ) ? b : a;
         })
         console.log("mouse x pos = " + mouse.x/lineGap + ". closest number was = " + closestX);
-        squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap))
+        squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap, color))
     }else{
         console.log("mouse outside grid");
     }
@@ -128,3 +132,10 @@ function setupGridCordinates(){
         gridY.push(i);
     }
 }
+
+function changeColor(changeColor){
+    color = changeColor;
+}
+
+const redColorBtn = document.getElementById('grid-item1');
+redColorBtn.addEventListener('click', () => {changeColor('red')});
