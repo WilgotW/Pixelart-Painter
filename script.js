@@ -5,7 +5,7 @@ canvas.width = 750;
 canvas.height = 750;
 
 let lines = [];
-let lineAmount = 10;
+let lineAmount = 25;
 let lineGap = canvas.width/lineAmount;
 
 let squares = [];
