@@ -7,6 +7,7 @@ canvas.height = 750;
 let lines = [];
 let lineAmount = 25;
 let lineGap = canvas.width/lineAmount;
+let linesWidth = 1;
 
 let squares = [];
 
@@ -30,7 +31,7 @@ class line {
     draw(){
         c.strokeStyle = 'black';
         c.beginPath();
-        c.lineWidth = 1;
+        c.lineWidth = linesWidth;
         c.moveTo(this.x, this.y);
         c.lineTo(this.endX, this.endY);
         c.stroke();
@@ -122,7 +123,7 @@ function update(){
         placePixels();
     }
 
-
+    
     requestAnimationFrame(update);
 }
 update();
@@ -136,6 +137,7 @@ function setupGridCordinates(){
     }
 }
 function setup(){
+    
     clearCanvas();
     grid1.draw();
     setupGridCordinates();
@@ -179,6 +181,15 @@ blackColorBtn.addEventListener('click', () => {changeColor('black')});
 //Slider
 const dimensionSlider = document.getElementById('slider');
 const dimensionText = document.getElementById('dimensionsText');
+
+const lineThicknesText = document.getElementById('lineThicknes');
+function changeLineThicknes(){
+    if(lineThicknesText.value != ""){
+        linesWidth = parseInt(lineThicknesText.value);   
+    }
+    
+}
+setInterval(changeLineThicknes, 10);
 
 function slider(){
     lineAmount = dimensionSlider.value;
