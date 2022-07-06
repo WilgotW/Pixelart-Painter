@@ -5,7 +5,7 @@ canvas.width = 750;
 canvas.height = 750;
 
 let lines = [];
-let lineAmount = 10;
+let lineAmount = 25;
 let lineGap = canvas.width/lineAmount;
 
 let squares = [];
@@ -41,6 +41,9 @@ class grid{
     constructor(){
     }
     draw(){
+        lines = [];
+        squares = [];
+        console.log("drawing new canvas");
         lines.push(new line(0, 0, 0, canvas.height));
         lines.push(new line(canvas.width, 0, canvas.width, canvas.height));
         lines.push(new line(0, canvas.height, canvas.width, canvas.height));
@@ -54,9 +57,10 @@ class grid{
             lines.push(new line(0, z*lineGap, canvas.width, z*lineGap));
         }
         for(let i = 0; i < lines.length; i++){lines[i].draw();}
+
     }
 }
-let grid1;
+let grid1 = new grid();
 
 class fillSquare{
     constructor(x, y, size, color){
@@ -104,7 +108,7 @@ function placePixels(){
             return Math.abs(b-mouse.y/lineGap +MouseOffset ) < Math.abs(a - mouse.y/lineGap +MouseOffset ) ? b : a;
         })
         console.log("mouse x pos = " + mouse.x/lineGap + ". closest number was = " + closestX);
-        squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap, color))
+        squares.push(new fillSquare(closestX * lineGap,closestY * lineGap, lineGap, color));
     }else{
         console.log("mouse outside grid");
     }
@@ -117,11 +121,15 @@ function update(){
     if(mouseDown){
         placePixels();
     }
+
+
     requestAnimationFrame(update);
 }
 update();
 
 function setupGridCordinates(){
+    gridX = [];
+    gridY = [];
     for(i = 0; i < lines.length/2; i++){
         gridX.push(i);
         gridY.push(i);
@@ -134,10 +142,9 @@ function setup(){
 }
 setup();
 function clearCanvas(){
-    grid1 = new grid();
+    console.log("cleaing canvas");
     c.fillStyle = "white";
     c.fillRect(0, 0, canvas.width, canvas.height);
-
 }
 
 function changeColor(changeColor){
@@ -175,10 +182,19 @@ const dimensionText = document.getElementById('dimensionsText');
 
 function slider(){
     lineAmount = dimensionSlider.value;
+    lineGap = canvas.width/lineAmount;
     dimensionTextChange();
 }
 function dimensionTextChange(){
+    let e = dimensionText.innerHTML;
     dimensionText.innerHTML = lineAmount + "x" + lineAmount;
-    setup();
+    let v = dimensionText.innerHTML;
+    if(e != v){
+        
+        clearCanvas();
+        grid1.draw();
+        setupGridCordinates();
+        
+    }
 }
 setInterval(slider, 10);
